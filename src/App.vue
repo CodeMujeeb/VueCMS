@@ -5,9 +5,9 @@ import Header from '../src/components/Header.vue'
 
 <template>
   <v-layout>
-    <v-app-bar title="Vue CMS" color="secondary" density="compact"></v-app-bar>
+    <v-app-bar title="Vue CMS" class="bg-teal-darken-3" density="compact"></v-app-bar>
     <Header></Header>
-    <v-main class="d-flex align-center justify-center" style="min-height: 300px">
+    <v-main>
       <RouterView />
     </v-main>
   </v-layout>

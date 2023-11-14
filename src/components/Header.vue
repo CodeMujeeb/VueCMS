@@ -7,7 +7,10 @@ const rail = ref(false)
 </script>
 
 <template>
-  <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false">
+  <v-navigation-drawer v-model="drawer" :rail="rail" class="bg-teal-darken-1"
+        theme="dark"
+        permanent
+        @click="rail = false">
     <v-list-item
       prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
       title="Abdul Mujeeb"
@@ -30,22 +33,45 @@ const rail = ref(false)
             title="Administration"
           ></v-list-item>
         </template>
+
+      <router-link to="/users" class="link">
         <v-list-item
           prepend-icon="mdi-account-group-outline"
           value="users"
         >
-        <router-link to="/users">Users</router-link>
-      </v-list-item>
+        Users </v-list-item>
+      </router-link>
+      
+      <router-link to="/roles" class="link">
         <v-list-item
           prepend-icon="mdi mdi-lock-check-outline"
           title="Roles and Permissions"
           value="roles"
         ></v-list-item>
+      </router-link>
       </v-list-group>
-      <v-list-item prepend-icon="mdi mdi-camera-outline" value="Products">
-        <router-link to="/products">Products</router-link>
-      </v-list-item>
-      <v-list-item prepend-icon="mdi mdi-archive-outline" title="Categories" value="Categories"></v-list-item>
+
+      <router-link to="/products" class="link">
+        <v-list-item prepend-icon="mdi mdi-camera-outline" value="Products">
+        Products
+        </v-list-item>
+      </router-link>
+      
+      <router-link to="/categories" class="link">
+        <v-list-item prepend-icon="mdi mdi-archive-outline" title="Categories" value="Categories"></v-list-item>
+      </router-link>
     </v-list>
   </v-navigation-drawer>
 </template>
+
+<style scoped>
+.link {
+  color:white;
+  font-size: 0.8125rem;
+  background: transparent;
+}
+
+.link:hover {
+  color:white;
+}
+</style>
