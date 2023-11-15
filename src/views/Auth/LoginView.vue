@@ -3,7 +3,6 @@ import BaseInput from '../../components/inputs/baseInput.vue'
 
 </script>
 <template>
-  <v-container>
     <v-card
     class="mx-auto"
     style="max-width: 500px;"
@@ -159,7 +158,6 @@ import BaseInput from '../../components/inputs/baseInput.vue'
       </v-card>
     </v-dialog>
   </v-card>
-  </v-container>
 </template>
 
 <script>

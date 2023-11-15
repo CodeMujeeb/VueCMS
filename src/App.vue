@@ -18,9 +18,9 @@ provide('app:layout', layout);
 <template>
   <v-layout>
       <component :is="layout">
-      </component>
-      <v-main>
+         <v-main>
         <RouterView />
       </v-main>
+      </component>
   </v-layout>
 </template>
