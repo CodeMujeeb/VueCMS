@@ -1,14 +1,26 @@
 <script setup>
+import { shallowRef, provide } from 'vue';
 import { RouterView } from 'vue-router'
-import Header from '../src/components/Header.vue'
+import router from  './router/index'
+import layouts from  './views/Layouts/layouts'
+
+const layout = shallowRef();
+
+router.afterEach((to) => {
+  layout.value = layouts[to.meta.layout];
+  console.log("to", to)
+  console.log("layouts", layouts[to.meta.layout])
+  console.log("layout", layout)
+});
+provide('app:layout', layout);
 </script>
 
 <template>
   <v-layout>
-    <v-app-bar title="Vue CMS" class="bg-teal-darken-3" density="compact"></v-app-bar>
-    <Header></Header>
-    <v-main>
-      <RouterView />
-    </v-main>
+      <component :is="layout">
+      </component>
+      <v-main>
+        <RouterView />
+      </v-main>
   </v-layout>
 </template>

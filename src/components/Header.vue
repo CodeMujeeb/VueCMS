@@ -24,7 +24,10 @@ const rail = ref(false)
     <v-divider></v-divider>
 
     <v-list density="compact" nav>
-      <v-list-item prepend-icon="mdi-view-dashboard-outline" title="Dashboard" value="dashboard"></v-list-item>
+      <router-link to="/" class="link">
+        <v-list-item prepend-icon="mdi-view-dashboard-outline" title="Dashboard" value="dashboard"></v-list-item>
+      </router-link>
+      
       <v-list-group value="Administration">
         <template v-slot:activator="{ props }">
           <v-list-item
