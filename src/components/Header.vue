@@ -54,6 +54,12 @@ const rail = ref(false)
       </router-link>
       </v-list-group>
 
+      <router-link to="/stores" class="link">
+        <v-list-item prepend-icon="mdi mdi-camera-outline" value="Stores">
+        Stores
+        </v-list-item>
+      </router-link>
+
       <router-link to="/products" class="link">
         <v-list-item prepend-icon="mdi mdi-camera-outline" value="Products">
         Products
@@ -63,6 +69,7 @@ const rail = ref(false)
       <router-link to="/categories" class="link">
         <v-list-item prepend-icon="mdi mdi-archive-outline" title="Categories" value="Categories"></v-list-item>
       </router-link>
+
     </v-list>
   </v-navigation-drawer>
 </template>

@@ -2,6 +2,7 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
+import Datatable from './components/core/Datatable.vue'
 import router from './router'
 
 // Vuetify
@@ -26,6 +27,8 @@ const vuetify = createVuetify({
 const app = createApp(App)
 
 app.use(router)
+
+app.component('datatable', Datatable)
 
 app.use(vuetify)
 
