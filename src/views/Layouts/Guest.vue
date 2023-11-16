@@ -1,5 +1,5 @@
 <template>
-  <v-container color="e">
+  <v-container>
     <v-row justify="center">
       <slot /> 
     </v-row>

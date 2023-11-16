@@ -1,14 +1,10 @@
-<script setup>
-import BaseInput from '../../components/inputs/baseInput.vue'
-
-</script>
 <template>
     <v-card
     class="mx-auto"
     style="max-width: 500px;"
   >
     <v-toolbar
-      color="deep-purple-accent-4"
+      color="teal-darken-3"
       cards
       dark
       flat
@@ -17,15 +13,9 @@ import BaseInput from '../../components/inputs/baseInput.vue'
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
       <v-card-title class="text-h6 font-weight-regular">
-        Sign up
+        Sign In
       </v-card-title>
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
     </v-toolbar>
     <v-form
       ref="form"
@@ -33,8 +23,8 @@ import BaseInput from '../../components/inputs/baseInput.vue'
       class="pa-4 pt-6"
     >
     <BaseInput
-          v-model="event.title"
-          label="Title"
+          v-model="title"
+          label="asdasdasd"
           type="text"
         />
         <!-- <BaseInput
@@ -68,12 +58,6 @@ import BaseInput from '../../components/inputs/baseInput.vue'
 
 
 
-      <v-text-field
-        v-model="phone"
-        variant="filled"
-        color="deep-purple"
-        label="Phone number"
-      ></v-text-field>
       <v-text-field
         v-model="email"
         :rules="[rules.email]"
@@ -163,9 +147,7 @@ import BaseInput from '../../components/inputs/baseInput.vue'
 <script>
   export default {
     data: () => ({
-      event: {
-        title: ''
-      },
+      title: '',
       agreement: false,
       bio: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts',
       dialog: false,

@@ -6,6 +6,13 @@
         @input="$emit('update:modelValue', $event.target.value)"
         class="field"
     >
+    <!-- <v-text-field
+      :value="modelValue"
+      variant="filled"
+      color="teal-darken-3"
+      :label="label"
+      class="field"
+    ></v-text-field> -->
 </template>
 
 <script>
