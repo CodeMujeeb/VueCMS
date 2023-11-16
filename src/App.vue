@@ -18,9 +18,15 @@ provide('app:layout', layout);
 <template>
   <v-layout>
       <component :is="layout">
-         <v-main>
-        <RouterView />
-      </v-main>
+        <v-container class="mt-5">
+          <router-view></router-view>
+        </v-container>
       </component>
   </v-layout>
 </template>
+
+<style>
+body{
+  place-items: initial!important;
+}
+</style>

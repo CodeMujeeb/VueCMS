@@ -1,10 +1,4 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col class="">
-      Products listing
-      </v-col>
-    </v-row>
-  </v-container>
+      <h1>Products listing</h1>
   </template>
 

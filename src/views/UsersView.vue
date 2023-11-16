@@ -1,112 +1,169 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col class="">
-        <v-data-table-server
-          v-model:items-per-page="itemsPerPage"
-          :search="search"
-          :headers="headers"
-          :items-length="totalItems"
-          :items="serverItems"
-          :loading="loading"
-          item-value="name"
-          @update:options="loadItems"
-        >
-        </v-data-table-server>
-      </v-col>
-    </v-row>
-  </v-container>
-  </template>
+  <v-data-table
+    :headers="headers"
+    :items="desserts"
+    :sort-by="[{ key: 'name', order: 'asc' }]"
+  >
+
+  <template v-slot:item.status="{ value }">
+      <v-chip :color="getColor(value)">
+        {{ value }}
+      </v-chip>
+    </template>
+
+    <template v-slot:top>
+      <v-toolbar
+        flat
+      >
+        <v-toolbar-title>Users</v-toolbar-title>
+        <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-card>
+            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue-darken-1" variant="text" @click="closeDelete">Cancel</v-btn>
+              <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">OK</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-toolbar>
+    </template>
+    <template v-slot:item.actions="{ item }">
+      <v-icon
+        size="small"
+        class="me-2"
+        @click="editItem(item)"
+      >
+        mdi-pencil
+      </v-icon>
+      <v-icon
+        size="small"
+        @click="deleteItem(item)"
+      >
+        mdi-delete
+      </v-icon>
+    </template>
+    <template v-slot:no-data>
+      <v-btn
+        color="primary"
+        @click="initialize"
+      >
+        Reset
+      </v-btn>
+    </template>
+  </v-data-table>
+</template>
 
 <script>
-const desserts = [
-  {
-    id: 159,
-    name: 'John Doe',
-    email: 'johndoe@admin.com',
-    roles: 'Admin, Business Admin',
-    carbs: 24,
-    last_login: '14 November 2023 05:00 AM',
-  },
-]
-
-const FakeAPI = {
-  async fetch ({ page, itemsPerPage, sortBy, search }) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        const start = (page - 1) * itemsPerPage
-        const end = start + itemsPerPage
-        const items = desserts.slice().filter(item => {
-          if (search.name && !item.name.toLowerCase().includes(search.name.toLowerCase())) {
-            return false
-          }
-
-          // eslint-disable-next-line sonarjs/prefer-single-boolean-return
-          if (search.calories && !(item.calories >= Number(search.calories))) {
-            return false
-          }
-
-          return true
-        })
-
-        if (sortBy.length) {
-          const sortKey = sortBy[0].key
-          const sortOrder = sortBy[0].order
-          items.sort((a, b) => {
-            const aValue = a[sortKey]
-            const bValue = b[sortKey]
-            return sortOrder === 'desc' ? bValue - aValue : aValue - bValue
-          })
-        }
-
-        const paginated = items.slice(start, end)
-
-        resolve({ items: paginated, total: items.length })
-      }, 500)
-    })
-  },
-}
-
-export default {
-  data: () => ({
-    itemsPerPage: 10,
-    headers: [
-      {
-        title: 'Id',
-        align: 'start',
-        sortable: false,
-        key: 'id',
+  export default {
+    data: () => ({
+      dialogDelete: false,
+      headers: [
+        {
+          title: 'Full Name',
+          align: 'start',
+          sortable: false,
+          key: 'name',
+        },
+        { title: 'Email', key: 'email' },
+        { title: 'Roles', key: 'roles' },
+        { title: 'Status', key: 'status' },
+        { title: 'Last Login', key: 'last_login' },
+        { title: 'Actions', key: 'actions', sortable:false }
+      ],
+      desserts: [],
+      editedIndex: -1,
+      editedItem: {
+        name: '',
+        calories: 0,
+        fat: 0,
+        carbs: 0,
+        protein: 0,
       },
-      { title: 'Full Name', key: 'name', align: 'end' },
-      { title: 'Email', key: 'email', align: 'end' },
-      { title: 'Roles (g)', key: 'roles', align: 'end' },
-      { title: 'Last Login (%)', key: 'last_login', align: 'end' },
-      { title: 'Actions', key: 'actions', align: 'end' },
-    ],
-    serverItems: [],
-    loading: true,
-    totalItems: 0,
-    name: '',
-    calories: '',
-    search: '',
-  }),
-  watch: {
-    name () {
-      this.search = String(Date.now())
+      defaultItem: {
+        name: '',
+        calories: 0,
+        fat: 0,
+        carbs: 0,
+        protein: 0,
+      },
+    }),
+
+    computed: {
+      formTitle () {
+        return this.editedIndex === -1 ? 'New Item' : 'Edit User'
+      },
     },
-    calories () {
-      this.search = String(Date.now())
+
+    watch: {
+      dialogDelete (val) {
+        val || this.closeDelete()
+      },
     },
-  },
-  methods: {
-    loadItems ({ page, itemsPerPage, sortBy }) {
-      this.loading = true
-      FakeAPI.fetch({ page, itemsPerPage, sortBy, search: { name: this.name, calories: this.calories } }).then(({ items, total }) => {
-        this.serverItems = items
-        this.totalItems = total
-        this.loading = false
-      })
+
+    created () {
+      this.initialize()
     },
-  },
-}
+
+    methods: {
+      initialize () {
+        this.desserts = [
+          {
+            name: 'Admin',
+            roles: 'Admin, SuperAdmin',
+            email: 'admin@admin.com',
+            status: 'active',
+            last_login: '11 Novemeber 2023, 05:06 PM',
+          },
+        ]
+      },
+
+      editItem (item) {
+        this.editedIndex = this.desserts.indexOf(item)
+        this.editedItem = Object.assign({}, item)
+      },
+
+      getColor (status){
+        if (status == 'active') return 'green'
+        else if (status == 'inactive') return 'orange'
+        else return 'red'
+      },
+
+      deleteItem (item) {
+        this.editedIndex = this.desserts.indexOf(item)
+        this.editedItem = Object.assign({}, item)
+        this.dialogDelete = true
+      },
+
+      deleteItemConfirm () {
+        this.desserts.splice(this.editedIndex, 1)
+        this.closeDelete()
+      },
+
+      close () {
+        this.$nextTick(() => {
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
+        })
+      },
+
+      closeDelete () {
+        this.dialogDelete = false
+        this.$nextTick(() => {
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
+        })
+      },
+
+      save () {
+        if (this.editedIndex > -1) {
+          Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        } else {
+          this.desserts.push(this.editedItem)
+        }
+        this.close()
+      },
+    },
+  }
 </script>
