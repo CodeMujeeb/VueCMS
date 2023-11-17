@@ -5,11 +5,11 @@
     variant="filled"
     color="teal-darken-3"
     :label="label"
-    :type="inputType"
-    :class="class"
     :rules="rules"
     @input="$emit('update:modelValue', input)"
-  ></v-text-field>
+    v-bind="dynamicAttrs"
+  >
+  </v-text-field>
 </template>
 
 <script>
@@ -29,13 +29,9 @@ export default {
       type: Array,
       default: []
     },
-    inputType: {
-      type: String,
-      default: 'text'
-    },
-    class: {
-      type: String,
-      default: 'field'
+    dynamicAttrs: {
+      type: Object,
+      default: () => ({})
     }
   },
   setup(props, context) {

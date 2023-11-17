@@ -13,6 +13,7 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { aliases } from 'vuetify/iconsets/mdi'
 import BaseInput from  './components/inputs/BaseInput.vue'
+import BaseSelect from  './components/inputs/BaseSelect.vue'
 
 // import './plugins/chartlist'
 
@@ -29,10 +30,11 @@ const app = createApp(App)
 
 app.use(router)
 
-app.component('datatable', Datatable)
 
 app.use(vuetify)
 
+app.component('datatable', Datatable)
 app.component('BaseInput', BaseInput)
+app.component('BaseSelect', BaseSelect)
 
 app.mount('#app')

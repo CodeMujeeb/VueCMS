@@ -14,13 +14,19 @@ const router = createRouter({
       path: '/users',
       name: 'users',
       meta: { layout: 'Admin' },
-      component: () => import('../views/UsersView.vue')
+      component: () => import('../views/users/ListingView.vue')
+    },
+    {
+      path: '/users/create',
+      name: 'users-create',
+      meta: { layout: 'Admin' },
+      component: () => import('../views/users/UserFormView.vue')
     },
     {
       path: '/roles',
       name: 'admin',
       meta: { layout: 'Admin' },
-      component: () => import('../views/UsersView.vue')
+      component: () => import('../views/users/ListingView.vue')
     },
     ...ecommerceRoutes.routes,
     {
