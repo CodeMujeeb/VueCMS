@@ -12,6 +12,7 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { aliases } from 'vuetify/iconsets/mdi'
+import BaseInput from  './components/inputs/BaseInput.vue'
 
 // import './plugins/chartlist'
 
@@ -31,5 +32,7 @@ app.use(router)
 app.component('datatable', Datatable)
 
 app.use(vuetify)
+
+app.component('BaseInput', BaseInput)
 
 app.mount('#app')

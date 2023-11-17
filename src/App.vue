@@ -8,7 +8,6 @@ const layout = shallowRef();
 
 router.afterEach((to) => {
   layout.value = layouts[to.meta.layout];
-  
 });
 provide('app:layout', layout);
 </script>
