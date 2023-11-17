@@ -54,7 +54,24 @@
 
 <script>
 export default {
-  props: ['headers', 'records', 'title', 'actions'],
+  props: {
+    headers: {
+      type: Array,
+      default: []
+    },
+    records: {
+      type: Array,
+      default: []
+    },
+    title: {
+      type: String,
+      default: 'Table'
+    },
+    actions: {
+      type: Array,
+      default: []
+    }
+  },
   data: () => ({
     dialogDelete: false,
     editedIndex: -1
